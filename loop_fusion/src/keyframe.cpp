@@ -10,6 +10,7 @@
  *******************************************************/
 
 #include "keyframe.h"
+#include <opencv2/highgui/highgui_c.h>
 
 template <typename Derived>
 static void reduceVector(vector<Derived> &v, vector<uchar> status)
