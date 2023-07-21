@@ -76,7 +76,7 @@ class FeaturePerId
 
 class FeatureManager
 {
-  public:
+public:
     FeatureManager(Matrix3d _Rs[]);
 
     void setRic(Matrix3d _ric[]);
@@ -99,14 +99,16 @@ class FeatureManager
     void removeBack();
     void removeFront(int frame_count);
     void removeOutlier(set<int> &outlierIndex);
+
     list<FeaturePerId> feature;
     int last_track_num;
     double last_average_parallax;
     int new_feature_num;
     int long_track_num;
 
-  private:
+private:
     double compensatedParallax2(const FeaturePerId &it_per_id, int frame_count);
+
     const Matrix3d *Rs;
     Matrix3d ric[2];
 };

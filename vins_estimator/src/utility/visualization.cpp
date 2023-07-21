@@ -9,6 +9,7 @@
 
 #include "visualization.h"
 #include "../estimator/parameters.h"
+#include "CameraPoseVisualization.h"
 
 using namespace ros;
 using namespace Eigen;
