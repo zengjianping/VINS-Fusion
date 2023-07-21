@@ -8,6 +8,9 @@
  *******************************************************/
 
 #include "projection_factor.h"
+#include "../utility/utility.h"
+#include "../utility/tic_toc.h"
+
 
 Eigen::Matrix2d ProjectionFactor::sqrt_info;
 double ProjectionFactor::sum_t;

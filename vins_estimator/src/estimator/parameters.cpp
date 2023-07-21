@@ -8,6 +8,8 @@
  *******************************************************/
 
 #include "parameters.h"
+#include <ros/ros.h>
+
 
 double INIT_DEPTH;
 double MIN_PARALLAX;

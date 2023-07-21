@@ -10,6 +10,9 @@
  *******************************************************/
 
 #include "projectionOneFrameTwoCamFactor.h"
+#include "../utility/utility.h"
+#include "../utility/tic_toc.h"
+
 
 Eigen::Matrix2d ProjectionOneFrameTwoCamFactor::sqrt_info;
 double ProjectionOneFrameTwoCamFactor::sum_t;

@@ -18,6 +18,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/NavSatFix.h>
 #include "estimator/estimator.h"
+#include "estimator/parameters.h"
 #include "utility/visualization.h"
 #include <opencv2/imgproc/imgproc_c.h>
 #include <opencv2/highgui/highgui_c.h>

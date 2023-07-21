@@ -8,7 +8,6 @@
  *******************************************************/
 
 #pragma once
-
 #include <ros/ros.h>
 #include <std_msgs/Header.h>
 #include <std_msgs/Float32.h>
@@ -26,8 +25,8 @@
 #include "CameraPoseVisualization.h"
 #include <eigen3/Eigen/Dense>
 #include "../estimator/estimator.h"
-#include "../estimator/parameters.h"
 #include <fstream>
+
 
 extern ros::Publisher pub_odometry;
 extern ros::Publisher pub_path, pub_pose;

@@ -37,6 +37,10 @@ add_library(vins_lib
     src/estimator/parameters.cpp
     src/estimator/estimator.cpp
     src/estimator/feature_manager.cpp
+    src/factor/imu_factor.cpp
+    src/factor/initial_bias_factor.cpp
+    src/factor/initial_pose_factor.cpp
+    src/factor/integration_base.cpp
     src/factor/pose_local_parameterization.cpp
     src/factor/projectionTwoFrameOneCamFactor.cpp
     src/factor/projectionTwoFrameTwoCamFactor.cpp

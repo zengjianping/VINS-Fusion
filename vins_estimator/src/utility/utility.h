@@ -8,15 +8,15 @@
  *******************************************************/
 
 #pragma once
-
 #include <cmath>
 #include <cassert>
 #include <cstring>
 #include <eigen3/Eigen/Dense>
 
+
 class Utility
 {
-  public:
+public:
     template <typename Derived>
     static Eigen::Quaternion<typename Derived::Scalar> deltaQ(const Eigen::MatrixBase<Derived> &theta)
     {
@@ -140,10 +140,10 @@ class Utility
     static T normalizeAngle(const T& angle_degrees) {
       T two_pi(2.0 * 180);
       if (angle_degrees > 0)
-      return angle_degrees -
-          two_pi * std::floor((angle_degrees + T(180)) / two_pi);
+        return angle_degrees - two_pi * std::floor((angle_degrees + T(180)) / two_pi);
       else
-        return angle_degrees +
-            two_pi * std::floor((-angle_degrees + T(180)) / two_pi);
+        return angle_degrees + two_pi * std::floor((-angle_degrees + T(180)) / two_pi);
     };
 };
+
+

@@ -14,16 +14,13 @@
 #include <algorithm>
 #include <vector>
 #include <numeric>
-using namespace std;
-
+#include <map>
 #include <eigen3/Eigen/Dense>
+#include <opencv2/opencv.hpp>
+
+using namespace std;
 using namespace Eigen;
 
-#include <ros/console.h>
-#include <ros/assert.h>
-
-#include "parameters.h"
-#include "../utility/tic_toc.h"
 
 class FeaturePerFrame
 {

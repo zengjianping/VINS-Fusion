@@ -8,9 +8,12 @@
  *******************************************************/
 
 #include "visualization.h"
+#include "../estimator/parameters.h"
 
 using namespace ros;
 using namespace Eigen;
+
+
 ros::Publisher pub_odometry, pub_latest_odometry;
 ros::Publisher pub_path;
 ros::Publisher pub_point_cloud, pub_margin_cloud;

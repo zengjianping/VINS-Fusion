@@ -8,14 +8,32 @@
  *******************************************************/
 
 #pragma once
-#include <eigen3/Eigen/Dense>
-#include <ceres/ceres.h>
 
+const double FOCAL_LENGTH = 460.0;
+const int WINDOW_SIZE = 10;
+const int NUM_OF_F = 1000;
 
-class PoseLocalParameterization : public ceres::LocalParameterization
+enum SIZE_PARAMETERIZATION
 {
-    virtual bool Plus(const double *x, const double *delta, double *x_plus_delta) const;
-    virtual bool ComputeJacobian(const double *x, double *jacobian) const;
-    virtual int GlobalSize() const { return 7; };
-    virtual int LocalSize() const { return 6; };
+    SIZE_POSE = 7,
+    SIZE_SPEEDBIAS = 9,
+    SIZE_FEATURE = 1
 };
+
+enum StateOrder
+{
+    O_P = 0,
+    O_R = 3,
+    O_V = 6,
+    O_BA = 9,
+    O_BG = 12
+};
+
+enum NoiseOrder
+{
+    O_AN = 0,
+    O_GN = 3,
+    O_AW = 6,
+    O_GW = 9
+};
+

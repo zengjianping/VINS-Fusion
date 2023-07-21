@@ -22,12 +22,12 @@
 #include "camodocal/camera_models/CameraFactory.h"
 #include "camodocal/camera_models/CataCamera.h"
 #include "camodocal/camera_models/PinholeCamera.h"
-#include "../estimator/parameters.h"
 #include "../utility/tic_toc.h"
 
 using namespace std;
 using namespace camodocal;
 using namespace Eigen;
+
 
 bool inBorder(const cv::Point2f &pt);
 void reduceVector(vector<cv::Point2f> &v, vector<uchar> status);
@@ -82,3 +82,4 @@ public:
     int n_id;
     bool hasPrediction;
 };
+

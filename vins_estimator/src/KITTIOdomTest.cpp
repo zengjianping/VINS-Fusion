@@ -18,6 +18,7 @@
 #include <sensor_msgs/Image.h>
 #include <cv_bridge/cv_bridge.h>
 #include "estimator/estimator.h"
+#include "estimator/parameters.h"
 #include "utility/visualization.h"
 #include <opencv2/imgproc/imgproc_c.h>
 #include <opencv2/highgui/highgui_c.h>

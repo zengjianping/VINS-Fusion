@@ -8,10 +8,10 @@
  *******************************************************/
 
 #pragma once
-
 #include <ctime>
 #include <cstdlib>
 #include <chrono>
+
 
 class TicToc
 {
@@ -36,3 +36,4 @@ class TicToc
   private:
     std::chrono::time_point<std::chrono::system_clock> start, end;
 };
+

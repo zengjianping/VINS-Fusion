@@ -8,6 +8,11 @@
  *******************************************************/
 
 #include "feature_manager.h"
+#include <ros/console.h>
+#include <ros/assert.h>
+#include "parameters.h"
+#include "../utility/tic_toc.h"
+
 
 int FeaturePerId::endFrame()
 {

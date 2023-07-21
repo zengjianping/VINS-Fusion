@@ -11,30 +11,20 @@
  
 #include <thread>
 #include <mutex>
-#include <std_msgs/Header.h>
-#include <std_msgs/Float32.h>
-#include <ceres/ceres.h>
 #include <unordered_map>
 #include <queue>
-#include <opencv2/core/eigen.hpp>
 #include <eigen3/Eigen/Dense>
 #include <eigen3/Eigen/Geometry>
+#include <opencv2/core/eigen.hpp>
 
-#include "parameters.h"
+#include "common.h"
 #include "feature_manager.h"
-#include "../utility/utility.h"
-#include "../utility/tic_toc.h"
+#include "../featureTracker/feature_tracker.h"
 #include "../initial/solve_5pts.h"
 #include "../initial/initial_sfm.h"
 #include "../initial/initial_alignment.h"
 #include "../initial/initial_ex_rotation.h"
-#include "../factor/imu_factor.h"
-#include "../factor/pose_local_parameterization.h"
 #include "../factor/marginalization_factor.h"
-#include "../factor/projectionTwoFrameOneCamFactor.h"
-#include "../factor/projectionTwoFrameTwoCamFactor.h"
-#include "../factor/projectionOneFrameTwoCamFactor.h"
-#include "../featureTracker/feature_tracker.h"
 
 
 class Estimator
@@ -147,7 +137,6 @@ class Estimator
     vector<Vector3d> margin_cloud;
     vector<Vector3d> key_poses;
     double initial_timestamp;
-
 
     double para_Pose[WINDOW_SIZE + 1][SIZE_POSE];
     double para_SpeedBias[WINDOW_SIZE + 1][SIZE_SPEEDBIAS];

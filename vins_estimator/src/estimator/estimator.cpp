@@ -8,7 +8,19 @@
  *******************************************************/
 
 #include "estimator.h"
+#include <ceres/ceres.h>
+#include <std_msgs/Header.h>
+#include <std_msgs/Float32.h>
+#include "parameters.h"
 #include "../utility/visualization.h"
+#include "../utility/utility.h"
+#include "../utility/tic_toc.h"
+#include "../factor/imu_factor.h"
+#include "../factor/pose_local_parameterization.h"
+#include "../factor/projectionTwoFrameOneCamFactor.h"
+#include "../factor/projectionTwoFrameTwoCamFactor.h"
+#include "../factor/projectionOneFrameTwoCamFactor.h"
+
 
 Estimator::Estimator(): f_manager{Rs}
 {
@@ -440,7 +452,7 @@ void Estimator::processImage(const map<int, vector<pair<int, Eigen::Matrix<doubl
         {
             vector<pair<Vector3d, Vector3d>> corres = f_manager.getCorresponding(frame_count - 1, frame_count);
             Matrix3d calib_ric;
-            if (initial_ex_rotation.CalibrationExRotation(corres, pre_integrations[frame_count]->delta_q, calib_ric))
+            if (initial_ex_rotation.CalibrationExRotation(corres, pre_integrations[frame_count]->delta_q, WINDOW_SIZE, calib_ric))
             {
                 ROS_WARN("initial extrinsic rotation calib success");
                 ROS_WARN_STREAM("initial extrinsic rotation: " << endl << calib_ric);
