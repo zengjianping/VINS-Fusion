@@ -776,7 +776,7 @@ bool Estimator::initialStructure()
             Rs[i] = Ri;
             all_image_frame[Headers[i]].is_key_frame = true;
         }
-        //f_manager.clearDepth();
+        f_manager.clearDepth();
         f_manager.triangulate(frame_count, Ps, Rs, tic, ric);
     }
 
