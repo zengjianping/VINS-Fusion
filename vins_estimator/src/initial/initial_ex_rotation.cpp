@@ -39,7 +39,7 @@ bool InitialEXRotation::CalibrationExRotation(vector<pair<Vector3d, Vector3d>> c
         Quaterniond r2(Rc_g[i]);
 
         double angular_distance = 180 / M_PI * r1.angularDistance(r2);
-        printf("%d %f", i, angular_distance);
+        printf("%d %f\n", i, angular_distance);
 
         double huber = angular_distance > 5.0 ? 5.0 / angular_distance : 1.0;
         ++sum_ok;
@@ -138,7 +138,7 @@ double InitialEXRotation::testTriangulation(const vector<cv::Point2f> &l, const 
             front_count++;
     }
 
-    printf("MotionEstimator: %f", 1.0 * front_count / pointcloud.cols);
+    printf("MotionEstimator: %f\n", 1.0 * front_count / pointcloud.cols);
     return 1.0 * front_count / pointcloud.cols;
 }
 

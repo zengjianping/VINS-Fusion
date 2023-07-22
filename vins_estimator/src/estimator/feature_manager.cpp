@@ -54,14 +54,16 @@ int FeatureManager::getFeatureCount()
 
 bool FeatureManager::addFeatureCheckParallax(int frame_count, const map<int, vector<pair<int, Eigen::Matrix<double, 7, 1>>>> &image, double td)
 {
-    printf("input feature: %d", (int)image.size());
-    printf("num of feature: %d", getFeatureCount());
+    //rintf("input feature: %d\n", (int)image.size());
+    //printf("num of feature: %d\n", getFeatureCount());
+
     double parallax_sum = 0;
     int parallax_num = 0;
     last_track_num = 0;
     last_average_parallax = 0;
     new_feature_num = 0;
     long_track_num = 0;
+
     for (auto &id_pts : image)
     {
         FeaturePerFrame f_per_fra(id_pts.second[0].second, td);
@@ -114,8 +116,8 @@ bool FeatureManager::addFeatureCheckParallax(int frame_count, const map<int, vec
     }
     else
     {
-        printf("parallax_sum: %lf, parallax_num: %d", parallax_sum, parallax_num);
-        printf("current parallax: %lf", parallax_sum / parallax_num * FOCAL_LENGTH);
+        //printf("parallax_sum: %lf, parallax_num: %d\n", parallax_sum, parallax_num);
+        //printf("current parallax: %lf\n", parallax_sum / parallax_num * FOCAL_LENGTH);
         last_average_parallax = parallax_sum / parallax_num * FOCAL_LENGTH;
         return parallax_sum / parallax_num >= MIN_PARALLAX;
     }
@@ -131,11 +133,8 @@ vector<pair<Vector3d, Vector3d>> FeatureManager::getCorresponding(int frame_coun
             Vector3d a = Vector3d::Zero(), b = Vector3d::Zero();
             int idx_l = frame_count_l - it.start_frame;
             int idx_r = frame_count_r - it.start_frame;
-
             a = it.feature_per_frame[idx_l].point;
-
             b = it.feature_per_frame[idx_r].point;
-            
             corres.push_back(make_pair(a, b));
         }
     }
@@ -152,11 +151,8 @@ void FeatureManager::setDepth(const VectorXd &x)
             continue;
 
         it_per_id.estimated_depth = 1.0 / x(++feature_index);
-        //ROS_INFO("feature id %d , start_frame %d, depth %f ", it_per_id->feature_id, it_per_id-> start_frame, it_per_id->estimated_depth);
         if (it_per_id.estimated_depth < 0)
-        {
             it_per_id.solve_flag = 2;
-        }
         else
             it_per_id.solve_flag = 1;
     }
@@ -197,7 +193,6 @@ VectorXd FeatureManager::getDepthVector()
     return dep_vec;
 }
 
-
 void FeatureManager::triangulatePoint(Eigen::Matrix<double, 3, 4> &Pose0, Eigen::Matrix<double, 3, 4> &Pose1,
                         Eigen::Vector2d &point0, Eigen::Vector2d &point1, Eigen::Vector3d &point_3d)
 {
@@ -214,9 +209,8 @@ void FeatureManager::triangulatePoint(Eigen::Matrix<double, 3, 4> &Pose0, Eigen:
     point_3d(2) = triangulated_point(2) / triangulated_point(3);
 }
 
-
 bool FeatureManager::solvePoseByPnP(Eigen::Matrix3d &R, Eigen::Vector3d &P, 
-                                      vector<cv::Point2f> &pts2D, vector<cv::Point3f> &pts3D)
+                                    vector<cv::Point2f> &pts2D, vector<cv::Point3f> &pts3D)
 {
     Eigen::Matrix3d R_initial;
     Eigen::Vector3d P_initial;
@@ -231,6 +225,7 @@ bool FeatureManager::solvePoseByPnP(Eigen::Matrix3d &R, Eigen::Vector3d &P,
         printf("feature tracking not enough, please slowly move you device! \n");
         return false;
     }
+
     cv::Mat r, rvec, t, D, tmp_r;
     cv::eigen2cv(R_initial, tmp_r);
     cv::Rodrigues(tmp_r, rvec);
@@ -245,6 +240,7 @@ bool FeatureManager::solvePoseByPnP(Eigen::Matrix3d &R, Eigen::Vector3d &P,
         printf("pnp failed ! \n");
         return false;
     }
+
     cv::Rodrigues(rvec, r);
     //cout << "r " << endl << r << endl;
     Eigen::MatrixXd R_pnp;
@@ -261,7 +257,6 @@ bool FeatureManager::solvePoseByPnP(Eigen::Matrix3d &R, Eigen::Vector3d &P,
 
 void FeatureManager::initFramePoseByPnP(int frameCnt, Vector3d Ps[], Matrix3d Rs[], Vector3d tic[], Matrix3d ric[])
 {
-
     if(frameCnt > 0)
     {
         vector<cv::Point2f> pts2D;
@@ -283,6 +278,7 @@ void FeatureManager::initFramePoseByPnP(int frameCnt, Vector3d Ps[], Matrix3d Rs
                 }
             }
         }
+
         Eigen::Matrix3d RCam;
         Eigen::Vector3d PCam;
         // trans to w_T_cam
@@ -336,6 +332,7 @@ void FeatureManager::triangulate(int frameCnt, Vector3d Ps[], Matrix3d Rs[], Vec
             triangulatePoint(leftPose, rightPose, point0, point1, point3d);
             Eigen::Vector3d localPoint;
             localPoint = leftPose.leftCols<3>() * point3d + leftPose.rightCols<1>();
+
             double depth = localPoint.z();
             if (depth > 0)
                 it_per_id.estimated_depth = depth;
@@ -371,6 +368,7 @@ void FeatureManager::triangulate(int frameCnt, Vector3d Ps[], Matrix3d Rs[], Vec
             triangulatePoint(leftPose, rightPose, point0, point1, point3d);
             Eigen::Vector3d localPoint;
             localPoint = leftPose.leftCols<3>() * point3d + leftPose.rightCols<1>();
+
             double depth = localPoint.z();
             if (depth > 0)
                 it_per_id.estimated_depth = depth;
@@ -383,6 +381,7 @@ void FeatureManager::triangulate(int frameCnt, Vector3d Ps[], Matrix3d Rs[], Vec
             */
             continue;
         }
+
         it_per_id.used_num = it_per_id.feature_per_frame.size();
         if (it_per_id.used_num < 4)
             continue;
@@ -416,6 +415,7 @@ void FeatureManager::triangulate(int frameCnt, Vector3d Ps[], Matrix3d Rs[], Vec
             if (imu_i == imu_j)
                 continue;
         }
+
         assert(svd_idx == svd_A.rows());
         Eigen::Vector4d svd_V = Eigen::JacobiSVD<Eigen::MatrixXd>(svd_A, Eigen::ComputeThinV).matrixV().rightCols<1>();
         double svd_method = svd_V[2] / svd_V[3];
@@ -564,3 +564,4 @@ double FeatureManager::compensatedParallax2(const FeaturePerId &it_per_id, int f
 
     return ans;
 }
+

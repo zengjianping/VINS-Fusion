@@ -35,7 +35,6 @@ class Estimator
     void setParameter();
 
     // interface
-    void initFirstPose(Eigen::Vector3d p, Eigen::Matrix3d r);
     void inputIMU(double t, const Vector3d &linearAcceleration, const Vector3d &angularVelocity);
     void inputFeature(double t, const map<int, vector<pair<int, Eigen::Matrix<double, 7, 1>>>> &featureFrame);
     void inputImage(double t, const cv::Mat &_img, const cv::Mat &_img1 = cv::Mat());
@@ -103,11 +102,11 @@ class Estimator
     Matrix3d ric[2];
     Vector3d tic[2];
 
-    Vector3d        Ps[(WINDOW_SIZE + 1)];
-    Vector3d        Vs[(WINDOW_SIZE + 1)];
-    Matrix3d        Rs[(WINDOW_SIZE + 1)];
-    Vector3d        Bas[(WINDOW_SIZE + 1)];
-    Vector3d        Bgs[(WINDOW_SIZE + 1)];
+    Vector3d Ps[(WINDOW_SIZE + 1)];
+    Vector3d Vs[(WINDOW_SIZE + 1)];
+    Matrix3d Rs[(WINDOW_SIZE + 1)];
+    Vector3d Bas[(WINDOW_SIZE + 1)];
+    Vector3d Bgs[(WINDOW_SIZE + 1)];
     double td;
 
     Matrix3d back_R0, last_R, last_R0;
@@ -154,9 +153,6 @@ class Estimator
     map<double, ImageFrame> all_image_frame;
     IntegrationBase *tmp_pre_integration;
 
-    Eigen::Vector3d initP;
-    Eigen::Matrix3d initR;
-
     double latest_time;
     Eigen::Vector3d latest_P, latest_V, latest_Ba, latest_Bg, latest_acc_0, latest_gyr_0;
     Eigen::Quaterniond latest_Q;
@@ -164,3 +160,4 @@ class Estimator
     bool initFirstPoseFlag;
     bool initThreadFlag;
 };
+

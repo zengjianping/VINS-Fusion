@@ -125,8 +125,12 @@ void printStatistics(const Estimator &estimator, double t)
         ROS_INFO("td %f", estimator.td);
 }
 
-void pubOdometry(const Estimator &estimator, const std_msgs::Header &header)
+void pubOdometry(const Estimator &estimator, const string& frame_id, double timestamp)
 {
+    std_msgs::Header header;
+    header.frame_id = frame_id;
+    header.stamp = ros::Time(timestamp);
+
     if (estimator.solver_flag == Estimator::SolverFlag::NON_LINEAR)
     {
         nav_msgs::Odometry odometry;
@@ -179,8 +183,12 @@ void pubOdometry(const Estimator &estimator, const std_msgs::Header &header)
     }
 }
 
-void pubKeyPoses(const Estimator &estimator, const std_msgs::Header &header)
+void pubKeyPoses(const Estimator &estimator, const string& frame_id, double timestamp)
 {
+    std_msgs::Header header;
+    header.frame_id = frame_id;
+    header.stamp = ros::Time(timestamp);
+
     if (estimator.key_poses.size() == 0)
         return;
     visualization_msgs::Marker key_poses;
@@ -213,8 +221,12 @@ void pubKeyPoses(const Estimator &estimator, const std_msgs::Header &header)
     pub_key_poses.publish(key_poses);
 }
 
-void pubCameraPose(const Estimator &estimator, const std_msgs::Header &header)
+void pubCameraPose(const Estimator &estimator, const string& frame_id, double timestamp)
 {
+    std_msgs::Header header;
+    header.frame_id = frame_id;
+    header.stamp = ros::Time(timestamp);
+
     int idx2 = WINDOW_SIZE - 1;
 
     if (estimator.solver_flag == Estimator::SolverFlag::NON_LINEAR)
@@ -248,13 +260,15 @@ void pubCameraPose(const Estimator &estimator, const std_msgs::Header &header)
     }
 }
 
-
-void pubPointCloud(const Estimator &estimator, const std_msgs::Header &header)
+void pubPointCloud(const Estimator &estimator, const string& frame_id, double timestamp)
 {
+    std_msgs::Header header;
+    header.frame_id = frame_id;
+    header.stamp = ros::Time(timestamp);
+
     sensor_msgs::PointCloud point_cloud, loop_point_cloud;
     point_cloud.header = header;
     loop_point_cloud.header = header;
-
 
     for (auto &it_per_id : estimator.f_manager.feature)
     {
@@ -308,8 +322,12 @@ void pubPointCloud(const Estimator &estimator, const std_msgs::Header &header)
 }
 
 
-void pubTF(const Estimator &estimator, const std_msgs::Header &header)
+void pubTF(const Estimator &estimator, const string& frame_id, double timestamp)
 {
+    std_msgs::Header header;
+    header.frame_id = frame_id;
+    header.stamp = ros::Time(timestamp);
+
     if( estimator.solver_flag != Estimator::SolverFlag::NON_LINEAR)
         return;
     static tf::TransformBroadcaster br;
@@ -416,3 +434,4 @@ void pubKeyframe(const Estimator &estimator)
         pub_keyframe_point.publish(point_cloud);
     }
 }
+

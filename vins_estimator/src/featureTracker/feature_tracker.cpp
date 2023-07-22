@@ -161,7 +161,7 @@ map<int, vector<pair<int, Eigen::Matrix<double, 7, 1>>>> FeatureTracker::trackIm
         reduceVector(cur_pts, status);
         reduceVector(ids, status);
         reduceVector(track_cnt, status);
-        printf("temporal optical flow costs: %fms", t_o.toc());
+        //printf("temporal optical flow costs: %fms\n", t_o.toc());
         //printf("track cnt %d\n", (int)ids.size());
     }
 
@@ -171,12 +171,12 @@ map<int, vector<pair<int, Eigen::Matrix<double, 7, 1>>>> FeatureTracker::trackIm
     if (1)
     {
         //rejectWithF();
-        printf("set mask begins");
+        //printf("set mask begins\n");
         TicToc t_m;
         setMask();
-        printf("set mask costs %fms", t_m.toc());
+        //printf("set mask costs %fms\n", t_m.toc());
 
-        printf("detect feature begins");
+        //printf("detect feature begins\n");
         TicToc t_t;
         int n_max_cnt = MAX_CNT - static_cast<int>(cur_pts.size());
         if (n_max_cnt > 0)
@@ -189,7 +189,7 @@ map<int, vector<pair<int, Eigen::Matrix<double, 7, 1>>>> FeatureTracker::trackIm
         }
         else
             n_pts.clear();
-        printf("detect feature costs: %f ms", t_t.toc());
+        //printf("detect feature costs: %f ms\n", t_t.toc());
 
         for (auto &p : n_pts)
         {
@@ -313,7 +313,7 @@ void FeatureTracker::rejectWithF()
 {
     if (cur_pts.size() >= 8)
     {
-        printf("FM ransac begins");
+        printf("FM ransac begins\n");
         TicToc t_f;
         vector<cv::Point2f> un_cur_pts(cur_pts.size()), un_prev_pts(prev_pts.size());
         for (unsigned int i = 0; i < cur_pts.size(); i++)
@@ -338,8 +338,8 @@ void FeatureTracker::rejectWithF()
         reduceVector(cur_un_pts, status);
         reduceVector(ids, status);
         reduceVector(track_cnt, status);
-        printf("FM ransac: %d -> %lu: %f", size_a, cur_pts.size(), 1.0 * cur_pts.size() / size_a);
-        printf("FM ransac costs: %fms", t_f.toc());
+        printf("FM ransac: %d -> %lu: %f\n", size_a, cur_pts.size(), 1.0 * cur_pts.size() / size_a);
+        printf("FM ransac costs: %fms\n", t_f.toc());
     }
 }
 
@@ -347,7 +347,7 @@ void FeatureTracker::readIntrinsicParameter(const vector<string> &calib_file)
 {
     for (size_t i = 0; i < calib_file.size(); i++)
     {
-        printf("reading paramerter of camera %s", calib_file[i].c_str());
+        printf("reading paramerter of camera %s\n", calib_file[i].c_str());
         camodocal::CameraPtr camera = CameraFactory::instance()->generateCameraFromYamlFile(calib_file[i]);
         m_camera.push_back(camera);
     }
@@ -548,3 +548,4 @@ cv::Mat FeatureTracker::getTrackImage()
 {
     return imTrack;
 }
+
